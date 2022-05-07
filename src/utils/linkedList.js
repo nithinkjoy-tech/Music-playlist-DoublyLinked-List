@@ -7,7 +7,7 @@ class Node {
 }
 
 class LinkedList {
-  constructor(head, tail, currentlyPlaying, songData, size, newNode) {
+  constructor() {
     this.head = null;
     this.tail = null;
     this.currentlyPlaying = null;
@@ -117,6 +117,12 @@ class LinkedList {
       }
       this.i += 1;
       this.current = this.current.right;
+    }
+    if(index){
+      this.newNode = new Node(null, data, null);
+      this.tail.right = this.newNode;
+      this.tail.right.left = this.tail;
+      this.tail = this.tail.right;
     }
   }
 

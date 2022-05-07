@@ -17,15 +17,17 @@ export default function Player({songData, setSongData,src,setSrc}) {
   const playNextSong=()=>{
     console.log("nextsong");
     //console.log("pn",linkedList.playNext())
-    setNewSong(linkedList.playNext(src||newSong))
-    setSrc(null)
+    let newLocalSong=linkedList.playNext(src||newSong)
+    setNewSong(newLocalSong)
+    setSrc(newLocalSong)
   }
   
   const playPreviousSong=()=>{
     console.log("nextsong");
     //console.log("pn",linkedList.playNext())
-    setNewSong(linkedList.playPrevious(src||newSong))
-    setSrc(null)
+    let newLocalSong=linkedList.playPrevious(src||newSong)
+    setNewSong(newLocalSong)
+    setSrc(newLocalSong)
   }
 
   useEffect(()=>{

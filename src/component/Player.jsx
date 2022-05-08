@@ -1,40 +1,55 @@
-import React,{useState} from "react";
+import React, {useState,useEffect} from "react";
 import ReactAudioPlayer from "react-audio-player";
-import ReactJkMusicPlayer from 'react-jinke-music-player'
-import 'react-jinke-music-player/assets/index.css'
-import options from './../utils/options';
+import ReactJkMusicPlayer from "react-jinke-music-player";
+import "react-jinke-music-player/assets/index.css";
+import options from "./../utils/options";
+import AudioPlayer from "react-h5-audio-player";
+import "react-h5-audio-player/lib/styles.css";
+import linkedList from "../utils/linkedList";
 
-export default function Player({songData,setSongData}) {
-  // return (
-  //   <div style={{margin: "auto", width: "50%"}}>
-  //     <ReactAudioPlayer
-  //       src={"https://englishsongs.wapkiz.com/filedownload/2140029/KSHMR-Marnik-Bazaar-Sunburn-Goa-2015-Anthem-(englishsongs.wapkiz.com).mp3"}
-  //       autoPlay 
-  //       controls
-  //     />
-  //     <button className="btn btn-primary">Prev</button>
-  //     <button style={{marginLeft:"10px"}} className="btn btn-primary">Next</button>
-  //   </div>
+export default function Player({songData, setSongData,src,setSrc,userSelected,setUserSelected}) {
+  // const [src, setSrc] = useState(
+  //   //"https://dns4.vippendu.com/download/128k-drifu/Pakalin-Vaathil.mp3"
+  //   linkedList.getFirstSong()
   // );
-  const [audioInstance, setAudioInstance] = useState();
-  const getAudioInstance = instance => {
-    console.log("Getting audio instance", instance);
-    setAudioInstance(instance);
-  };
-
-  const changeSong=(index)=>{
-    songData.forEach((element)=>{
-      if(element.index==index){
-        console.log("manually",index,element);
-        setSongData([element])
-      }
-    })
+  // let uSelected=userSelected
+  const [newSong,setNewSong]=useState()
+  // const [uSelected,setUselected]=useState()
+  if(userSelected) setSrc(userSelected)
+  const playNextSong=()=>{
+    console.log("nextsong");
+    //console.log("pn",linkedList.playNext())
+    let newLocalSong=linkedList.playNext(userSelected||src||newSong)
+    setNewSong(newLocalSong)
+    setSrc(newLocalSong)
+    setUserSelected(null)
   }
-  console.log(audioInstance,"ai");
+  
+  const playPreviousSong=()=>{
+    console.log("nextsong");
+    //console.log("pn",linkedList.playNext())
+    let newLocalSong=linkedList.playPrevious(userSelected||src||newSong)
+    setNewSong(newLocalSong)
+    setSrc(newLocalSong)
+    setUserSelected(null)
+  }
+
+  useEffect(()=>{
+
+  },[newSong,src])
 
   return (
-    <div style={{marginBottom:"50px"}}>
-      <ReactJkMusicPlayer onAudioPlayTrackChange={(data)=>console.log(data,"data")} onPlayIndexChange={(index)=>changeSong(index)} audioLists={songData} {...options} />
+    <div>
+      <AudioPlayer
+        autoPlay
+        src={userSelected||newSong||src}
+        onPlay={e => console.log("onPlay")}
+        // other props here
+        showSkipControls
+        onClickNext={()=>playNextSong()}
+        onClickPrevious={()=>playPreviousSong()}
+        onEnded={()=>playNextSong()}
+      />
     </div>
-  ) 
+  );
 }

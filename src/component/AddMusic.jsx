@@ -10,7 +10,7 @@ const validationSchema = Yup.object().shape({
   songLink: Yup.string().min(2).max(3000).required("Song Link is required").label("Link"),
   artistName: Yup.string().min(2).max(50).required("Singer Name is required").label("Singer"),
   insertPosition: Yup.string().required("Insert position is required").label("Position"),
-  otherInsertPosition: Yup.string().min(0).label("Position"),
+  otherInsertPosition: Yup.number().integer().min(0).label("Position"),
   songAlbum: Yup.string().min(2).max(256).label("Album"),
 });
 

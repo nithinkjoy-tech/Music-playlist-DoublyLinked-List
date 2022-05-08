@@ -81,6 +81,7 @@ class LinkedList {
 
   deleteFirst(){
     if(this.head==this.tail){
+      this.size=this.size-1
       return this.head=this.tail=null
     }
 
@@ -88,10 +89,12 @@ class LinkedList {
     this.current=this.head.right
     this.head.right=null
     this.head=this.current
+    this.size=this.size-1
   }
 
   deleteLast(){
     if(this.head==this.tail){
+      this.size=this.size-1
       return this.head=this.tail=null
     }
 
@@ -99,6 +102,7 @@ class LinkedList {
     this.current=this.tail.left
     this.tail.left=null
     this.tail=this.current
+    this.size=this.size-1
   }
 
   deleteByLink(songLink){
@@ -108,6 +112,7 @@ class LinkedList {
         this.current.right.left=this.current.left
         this.current.left.right=this.current.right
         this.current=null
+        this.size=this.size-1
       }
     }
   }

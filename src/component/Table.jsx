@@ -1,10 +1,8 @@
 import React, {useState, useEffect, useMemo} from "react";
-import axios from "axios"
+//import axios from "axios"
 import DataTable from "react-data-table-component";
 import Player from "./Player";
-import NewPlayer from "./NewPlayer";
 import linkedList from "./../utils/linkedList";
-import AddMusic from "./AddMusic";
 import { displayNotification } from "../services/notificationService";
 
 export default function Table({songData,setSongData, setAddMusic,musicAdded}) {
@@ -37,9 +35,9 @@ export default function Table({songData,setSongData, setAddMusic,musicAdded}) {
     },500)
   },[musicAdded]);
 
-  useEffect(() => {
-    setCurrentlyPlaying(src)
-  },[src]);
+  // useEffect(() => {
+  //   setCurrentlyPlaying(src)
+  // },[src]);
 
   const playSelected=(row)=>{
     let selectedSong=linkedList.getUserSelectedSong(row.songLink)
@@ -48,7 +46,7 @@ export default function Table({songData,setSongData, setAddMusic,musicAdded}) {
 
   function deleteSong(row){
     let songLink=row.songLink
-    console.log("songLink",songLink,"src",currentlyPlaying)
+    //console.log("songLink",songLink,"src",currentlyPlaying)
     if(songLink==linkedList.getCurrentlyPlaying()){
       return displayNotification("error","Cannot remove currently playing song")
     }
@@ -147,7 +145,7 @@ export default function Table({songData,setSongData, setAddMusic,musicAdded}) {
         {/* <Player songData={songData} setSongData={setSongData} /> */}
       </div> 
       <div style={{margin: "auto", width: "50%"}} className="dashboard-items">
-        <NewPlayer setUserSelected={setUserSelected} userSelected={userSelected} src={src} setSrc={setSrc} songData={songData} />
+        <Player setUserSelected={setUserSelected} userSelected={userSelected} src={src} setSrc={setSrc} songData={songData} />
       </div>
     </>
   );

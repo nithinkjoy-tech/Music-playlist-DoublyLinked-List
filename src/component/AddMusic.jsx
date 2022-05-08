@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import * as Yup from "yup";
 import {Formik, Form} from "formik";
 import InputBox from "./common/InputBox";
@@ -14,52 +14,53 @@ const validationSchema = Yup.object().shape({
   songAlbum: Yup.string().min(2).max(256).label("Album"),
 });
 
-function AddMusic({setAddMusic,musicAdded,setMusicAdded,setSongData, max, operations}) {
+function AddMusic({setAddMusic, setMusicAdded, setSongData, max, operations}) {
   const handleSubmit = async (values, setFieldError) => {
     if (values["insertPosition"] == "other" && !values["otherInsertPosition"]) {
       return setFieldError("otherInsertPosition", "Position is required");
     }
     if (values["otherInsertPosition"] > max)
       return setFieldError("otherInsertPosition", `Index should be between 0- ${max}`);
-    
-    console.log(values, "vls");
-    let existingSongs=operations.getData()
-    console.log(existingSongs,"es");
-    let duplicate=false
-    existingSongs.forEach((element)=>{
-      console.log(element.songLink,"kk",values["songLink"]);
-      if(element.songLink==values["songLink"]) {
-        console.log("equal");
-        duplicate=true
-        //return displayNotification("error","Duplicate song not allowed")
-      }
-    })
-    if(duplicate) return setFieldError("songLink","Duplicate song not allowed")
+
+    let existingSongs = operations.getData();
+    let duplicate = false;
+
+    existingSongs.forEach(element => {
+      if (element.songLink == values["songLink"]) duplicate = true;
+    });
+
+    if (duplicate) return setFieldError("songLink", "Duplicate song not allowed");
     displayNotification("success", "Music successfully Added");
     setAddMusic(false);
-    console.log(values["insertPosition"],"lst")
-    if(values["insertPosition"]=="First"){
-      operations.insertFirst({"songName":values["songName"], "songLink":values["songLink"], "artistName":values["artistName"], "songAlbum":values["songAlbum"]})
+
+    if (values["insertPosition"] == "First"){
+      operations.insertFirst({
+        songName: values["songName"],
+        songLink: values["songLink"],
+        artistName: values["artistName"],
+        songAlbum: values["songAlbum"],
+      });
     }
 
-    if(values["insertPosition"]=="Last"){
-      operations.insertLast({"songName":values["songName"], "songLink":values["songLink"], "artistName":values["artistName"], "songAlbum":values["songAlbum"]})
+    if (values["insertPosition"] == "Last") {
+      operations.insertLast({
+        songName: values["songName"],
+        songLink: values["songLink"],
+        artistName: values["artistName"],
+        songAlbum: values["songAlbum"],
+      });
     }
-    if(values["insertPosition"]=="other"){
-      operations.insertAt(values["otherInsertPosition"],{"songName":values["songName"], "songLink":values["songLink"], "artistName":values["artistName"], "songAlbum":values["songAlbum"]})
+
+    if (values["insertPosition"] == "other") {
+      operations.insertAt(values["otherInsertPosition"], {
+        songName: values["songName"],
+        songLink: values["songLink"],
+        artistName: values["artistName"],
+        songAlbum: values["songAlbum"],
+      });
     }
-    setMusicAdded(true)
-    setSongData(operations.getData())
-
-    // if(values["insertPosition"]=="first"){
-    //   operations.insertFirst("https://englishsongs.wapkiz.com/filedownload/2140029/KSHMR-Marnik-Bazaar-Sunburn-Goa-2015-Anthem-(englishsongs.wapkiz.com).mp3")
-    // }
-
-    // if(values["insertPosition"]=="last"){
-    //   operations.insertLast("http://res.cloudinary.com/alick/video/upload/v1502375674/Bedtime_Stories.mp3")
-    // }
-    // operations.insertAt(values["otherInsertPosition"],"https://dns4.vippendu.com/download/128k-drifu/Pakalin-Vaathil.mp3")
-    // setSongData(operations.getData())
+    setMusicAdded(true);
+    setSongData(operations.getData());
   };
 
   return (
@@ -140,7 +141,7 @@ function AddMusic({setAddMusic,musicAdded,setMusicAdded,setSongData, max, operat
               <PropertySelectBox
                 label="Insert Position"
                 name="insertPosition"
-                options={["","First", "Last", "other"]}
+                options={["", "First", "Last", "other"]}
               />
             </div>
             {getFieldProps("insertPosition").value == "other" && (

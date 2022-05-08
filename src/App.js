@@ -1,10 +1,9 @@
 import {useState} from "react";
-import "./App.css";
-import Table from "./component/Table.jsx";
-import Player from "./component/Player";
-import AddMusic from "./component/AddMusic";
 import {ToastContainer} from "react-toastify";
+import Table from "./component/Table.jsx";
+import AddMusic from "./component/AddMusic";
 import linkedList from "./utils/linkedList";
+import "./App.css";
 
 function App() {
   const [addMusic, setAddMusic] = useState(true);

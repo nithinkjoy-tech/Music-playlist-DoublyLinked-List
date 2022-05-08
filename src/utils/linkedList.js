@@ -38,7 +38,8 @@ class LinkedList {
         if(this.current.data.songLink==current){
             //console.log("huio",this.current.right.data.songLink);
             if(this.current.left){
-                return this.current.left.data.songLink
+              this.currentlyPlaying=this.current.left.data.songLink
+                return this.currentlyPlaying
             }else{
                 return this.getFirstSong()
             }
@@ -55,7 +56,8 @@ class LinkedList {
         if(this.current.data.songLink==current){
             //console.log("huio",this.current.right.data.songLink);
             if(this.current.right){
-                return this.current.right.data.songLink
+                this.currentlyPlaying=this.current.right.data.songLink
+                return this.currentlyPlaying
             }else{
                 return this.getFirstSong()
             }
@@ -111,7 +113,7 @@ class LinkedList {
   }
 
   getCurrentlyPlaying(){
-
+    return this.currentlyPlaying
   }
 
   getSize() {
@@ -122,19 +124,34 @@ class LinkedList {
   getUserSelectedSong(src){
     this.current=this.head
     while(this.current){
-      if(this.current.data.songLink==src) return this.current.data.songLink
+      if(this.current.data.songLink==src) {
+        this.currentlyPlaying=this.current.data.songLink
+        return this.currentlyPlaying
+      }
       this.current=this.current.right
     }
   }
 
-  getFirstSong() {
+  showFirstSong() {
     if (this.size == 0) return null;
     return this.head.data.songLink;
   }
 
-  getLastSong() {
+  showLastSong() {
     if (this.size == 0) return null;
     return this.tail.data.songLink;
+  }
+
+  getFirstSong() {
+    if (this.size == 0) return null;
+    this.currentlyPlaying=this.head.data.songLink;
+    return this.currentlyPlaying
+  }
+
+  getLastSong() {
+    if (this.size == 0) return null;
+    this.currentlyPlaying=this.tail.data.songLink;
+    return this.currentlyPlaying
   }
 
   insertAt(index, data) {

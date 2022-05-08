@@ -49,13 +49,13 @@ export default function Table({songData,setSongData, setAddMusic,musicAdded}) {
   function deleteSong(row){
     let songLink=row.songLink
     console.log("songLink",songLink,"src",currentlyPlaying)
-    if(songLink==currentlyPlaying){
+    if(songLink==linkedList.getCurrentlyPlaying()){
       return displayNotification("error","Cannot remove currently playing song")
     }
-    if(linkedList.getFirstSong()==songLink){
+    if(linkedList.showFirstSong()==songLink){
       linkedList.deleteFirst()
     }
-    else if(linkedList.getLastSong()==songLink){
+    else if(linkedList.showLastSong()==songLink){
       linkedList.deleteLast()
     }else{
       linkedList.deleteByLink(songLink)
@@ -64,7 +64,7 @@ export default function Table({songData,setSongData, setAddMusic,musicAdded}) {
     setSongData(linkedList.getData())
     displayNotification("warning","Removed song from playlist")
   }
-
+ 
   const addNewMusic = row => {
     console.log(row, "rw");
   };

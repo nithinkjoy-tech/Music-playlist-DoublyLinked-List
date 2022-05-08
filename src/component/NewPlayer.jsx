@@ -7,38 +7,42 @@ import AudioPlayer from "react-h5-audio-player";
 import "react-h5-audio-player/lib/styles.css";
 import linkedList from "../utils/linkedList";
 
-export default function Player({songData, setSongData,src,setSrc}) {
+export default function Player({songData, setSongData,src,setSrc,userSelected,setUserSelected}) {
   // const [src, setSrc] = useState(
   //   //"https://dns4.vippendu.com/download/128k-drifu/Pakalin-Vaathil.mp3"
   //   linkedList.getFirstSong()
   // );
+  // let uSelected=userSelected
   const [newSong,setNewSong]=useState()
-
+  // const [uSelected,setUselected]=useState()
+  if(userSelected) setSrc(userSelected)
   const playNextSong=()=>{
     console.log("nextsong");
     //console.log("pn",linkedList.playNext())
-    let newLocalSong=linkedList.playNext(src||newSong)
+    let newLocalSong=linkedList.playNext(userSelected||src||newSong)
     setNewSong(newLocalSong)
     setSrc(newLocalSong)
+    setUserSelected(null)
   }
   
   const playPreviousSong=()=>{
     console.log("nextsong");
     //console.log("pn",linkedList.playNext())
-    let newLocalSong=linkedList.playPrevious(src||newSong)
+    let newLocalSong=linkedList.playPrevious(userSelected||src||newSong)
     setNewSong(newLocalSong)
     setSrc(newLocalSong)
+    setUserSelected(null)
   }
 
   useEffect(()=>{
 
-  },[newSong])
+  },[newSong,src])
 
   return (
     <div>
       <AudioPlayer
         autoPlay
-        src={newSong||src}
+        src={userSelected||newSong||src}
         onPlay={e => console.log("onPlay")}
         // other props here
         showSkipControls

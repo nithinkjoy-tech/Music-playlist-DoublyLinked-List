@@ -77,14 +77,64 @@ class LinkedList {
     }
   }
 
+  deleteFirst(){
+    if(this.head==this.tail){
+      return this.head=this.tail=null
+    }
+
+    this.head.right.left=null
+    this.current=this.head.right
+    this.head.right=null
+    this.head=this.current
+  }
+
+  deleteLast(){
+    if(this.head==this.tail){
+      return this.head=this.tail=null
+    }
+
+    this.tail.left.right=null
+    this.current=this.tail.left
+    this.tail.left=null
+    this.tail=this.current
+  }
+
+  deleteByLink(songLink){
+    this.current=this.head
+    while(this.current){
+      if(this.current.data.songLink==songLink){
+        this.current.right.left=this.current.left
+        this.current.left.right=this.current.right
+        this.current=null
+      }
+    }
+  }
+
+  getCurrentlyPlaying(){
+
+  }
+
   getSize() {
     console.log("gets");
     return this.size;
   }
 
+  getUserSelectedSong(src){
+    this.current=this.head
+    while(this.current){
+      if(this.current.data.songLink==src) return this.current.data.songLink
+      this.current=this.current.right
+    }
+  }
+
   getFirstSong() {
     if (this.size == 0) return null;
     return this.head.data.songLink;
+  }
+
+  getLastSong() {
+    if (this.size == 0) return null;
+    return this.tail.data.songLink;
   }
 
   insertAt(index, data) {

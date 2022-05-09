@@ -100,6 +100,7 @@ class LinkedList {
   }
 
   deleteByLink(songLink) {
+    console.log("song link",songLink);
     this.current = this.head;
     while (this.current) {
       if (this.current.data.songLink == songLink) {
@@ -107,6 +108,8 @@ class LinkedList {
         this.current.left.right = this.current.right;
         this.current = null;
         this.size = this.size - 1;
+      }else{
+        this.current=this.current.right
       }
     }
   }
